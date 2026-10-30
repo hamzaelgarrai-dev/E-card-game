@@ -87,6 +87,17 @@ export const createGame = (playerId) =>{
     
 }
 
+
+export const isGameFinished =(game) =>{
+
+    if(game.round === 12 && game.roundWinner !== null){
+        return true;
+    }
+
+    return false;
+    
+}
+
 // Round Managment
 
 export const startRound = (game) =>{
