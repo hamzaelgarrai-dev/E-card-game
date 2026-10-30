@@ -11,7 +11,33 @@ export const createHand = (camp) =>{
 
 
 }
+
+export const removeCards = (hand , card) =>{
+
+    const index = hand.indexOf(card);
+
+    if(index === -1){
+        return false
+    }
+
+    hand.splice(index,1);
+
+    return hand;
+
+}
  
+export const choseComputerCard = (hand)=>{
+
+    if(hand.length === 0){
+        return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * hand.length);
+
+    return hand[randomIndex];
+
+
+}
 
 //Duel Managment
 
@@ -29,52 +55,13 @@ export const compareCards = (playerCard , computerCard ) =>{
 
 }
 
-export const removeCards = (hand , card) =>{
-
-    const index = hand.indexOf(card);
-
-    if(index === -1){
-        return false
-    }
-
-    hand.splice(index,1);
-
-    return hand;
-
-}
-
-export const choseComputerCard = (hand)=>{
-
-    if(hand.length === 0){
-        return null;
-    }
-
-    const randomIndex = Math.floor(Math.random() * hand.length);
-
-    return hand[randomIndex];
 
 
-}
 
-export const getPlayerCamp = (round) =>{
-    if(round >= 1 && round <= 3){
-        return "emperor"
-    }
 
-    if(round >= 4 && round <= 6){
-        return "slave"
-    }
 
-    if(round >= 7 && round <= 9){
-        return "emperor"
-    }
 
-    if(round >= 10 && round <= 12){
-        return "slave"
-    }
-
-    return null;
-}
+//game managment
 
 export const createGame = (playerId) =>{
 
@@ -100,6 +87,8 @@ export const createGame = (playerId) =>{
     
 }
 
+// Round Managment
+
 export const startRound = (game) =>{
     const playerCamp = getPlayerCamp(game.round);
 
@@ -124,6 +113,26 @@ export const startRound = (game) =>{
 
 }
 
+export const getPlayerCamp = (round) =>{
+    if(round >= 1 && round <= 3){
+        return "emperor"
+    }
+
+    if(round >= 4 && round <= 6){
+        return "slave"
+    }
+
+    if(round >= 7 && round <= 9){
+        return "emperor"
+    }
+
+    if(round >= 10 && round <= 12){
+        return "slave"
+    }
+
+    return null;
+}
+
 export const calculateRoundPoints = (winnerCamp) =>{
 
     if(winnerCamp === "emperor"){
@@ -135,5 +144,33 @@ export const calculateRoundPoints = (winnerCamp) =>{
     }
 
     return 0;
+
+}
+
+export const finishRound =(game , winner)=>{
+
+    if (winner !== "player" && winner !== "computer") {
+      return false;
+    }
+
+    if (game.roundWinner !== null) {
+      return false;
+    }
+
+    if (winner === "player") {
+
+        const ponits = calculateRoundPoints(game.playerCamp)
+
+        game.playerScore += ponits;
+    }
+    else{
+        const ponits = calculateRoundPoints(game.computerCamp);
+
+        game.computerScore += ponits;
+    }
+
+    game.roundWinner = winner;
+
+    return true;
 
 }
