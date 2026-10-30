@@ -42,3 +42,16 @@ export const removeCards = (hand , card) =>{
     return hand;
 
 }
+
+export const choseComputerCard = (hand)=>{
+
+    if(hand.length === 0){
+        return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * hand.length);
+
+    return hand[randomIndex];
+
+
+}
