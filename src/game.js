@@ -75,3 +75,27 @@ export const getPlayerCamp = (round) =>{
 
     return null;
 }
+
+export const createGame = (playerId) =>{
+
+    if(!playerId){
+        return null
+    }
+
+    const game = {
+    playerId,
+    round: 1,
+    duel: 0,
+    playerCamp: null,
+    computerCamp: null,
+    playerHand: [],
+    computerHand: [],
+    playerScore: 0,
+    computerScore: 0,
+    roundWinner: null,
+    status: "playing"
+  };
+
+  return game;
+    
+}
