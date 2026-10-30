@@ -174,3 +174,19 @@ export const finishRound =(game , winner)=>{
     return true;
 
 }
+
+export const nextRound = (game) =>{
+    if(game.roundWinner === null){
+        return false
+    }
+
+    if(game.round >= 12){
+        return false;
+    }
+
+    game.round ++;
+
+    startRound(game);
+
+    return true;
+}
