@@ -18,7 +18,13 @@ export const createHand = (camp) =>{
 export const compareCards = (playerCard , computerCard ) =>{
 
     if(playerCard == computerCard){
-        
+        return "tie"
     }
+
+    if((playerCard === "emperor" && computerCard === "citizen") || (playerCard === "citezen" && computerCard === "slave")||(playerCard === "slave" && computerCard === "emperor")){
+        return "player"
+    }
+
+    return "computer"
 
 }
