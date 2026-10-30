@@ -99,3 +99,27 @@ export const createGame = (playerId) =>{
   return game;
     
 }
+
+export const startRound = (game) =>{
+    const playerCamp = getPlayerCamp(game.round);
+
+    let computerCamp;
+
+    if(playerCamp === "emperor"){
+        computerCamp = "slave"
+    }
+    else{
+        computerCamp = "emperor"
+    }
+
+    game.playerCamp = playerCamp;
+    game.computerCamp = computerCamp;
+    game.playerHand = createHand(playerCamp);
+    game.computerHand = createHand(computerCamp);
+    
+    game.duel = 0;
+    game.roundWinner = null;
+
+    return game;
+
+}
