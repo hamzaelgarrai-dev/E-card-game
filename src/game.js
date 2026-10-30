@@ -123,3 +123,17 @@ export const startRound = (game) =>{
     return game;
 
 }
+
+export const calculateRoundPoints = (winnerCamp) =>{
+
+    if(winnerCamp === "emperor"){
+        return 1
+    }
+
+    if(winnerCamp === "slave"){
+        return 5
+    }
+
+    return 0;
+
+}
