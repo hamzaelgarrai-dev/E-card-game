@@ -28,3 +28,17 @@ export const compareCards = (playerCard , computerCard ) =>{
     return "computer"
 
 }
+
+export const removeCards = (hand , card) =>{
+
+    const index = hand.indexOf(card);
+
+    if(index === -1){
+        return false
+    }
+
+    hand.splice(index,1);
+
+    return hand;
+
+}
