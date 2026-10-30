@@ -98,6 +98,20 @@ export const isGameFinished =(game) =>{
     
 }
 
+export const getGameWinner = (winner) =>{
+    if(!isGameFinished(game)){
+        return null;
+    }
+    if(game.playerScore > game.computerScore){
+        return "player"
+    }
+    if(game.playerScore < game.computerScore){
+        return "computer"
+    }
+
+    return "tie";
+}
+
 // Round Managment
 
 export const startRound = (game) =>{
