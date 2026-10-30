@@ -55,3 +55,23 @@ export const choseComputerCard = (hand)=>{
 
 
 }
+
+export const getPlayerCamp = (round) =>{
+    if(round >= 1 && round <= 3){
+        return "emperor"
+    }
+
+    if(round >= 4 && round <= 6){
+        return "slave"
+    }
+
+    if(round >= 7 && round <= 9){
+        return "emperor"
+    }
+
+    if(round >= 10 && round <= 12){
+        return "slave"
+    }
+
+    return null;
+}
