@@ -14,15 +14,16 @@ export const createHand = (camp) =>{
 
 export const removeCards = (hand , card) =>{
 
-    const index = hand.indexOf(card);
+    const newHand = [...hand];
+    const index = newHand.indexOf(card);
 
     if(index === -1){
-        return false
+        return newHand
     }
 
-    hand.splice(index,1);
+    newHand.splice(index,1);
 
-    return hand;
+    return newHand;
 
 }
  
@@ -41,17 +42,17 @@ export const choseComputerCard = (hand)=>{
 
 //Duel Managment
 
-export const compareCards = (playerCard , computerCard ) =>{
+export const duel = (playerCard , computerCard ) =>{
 
-    if(playerCard == computerCard){
+    if(playerCard === computerCard){
         return "tie"
     }
 
-    if((playerCard === "emperor" && computerCard === "citizen") || (playerCard === "citezen" && computerCard === "slave")||(playerCard === "slave" && computerCard === "emperor")){
-        return "player"
+    if((playerCard === "emperor" && computerCard === "citizen") || (playerCard === "citizen" && computerCard === "slave")||(playerCard === "slave" && computerCard === "emperor")){
+        return "win"
     }
 
-    return "computer"
+    return "loss"
 
 }
 
@@ -70,22 +71,34 @@ export const playDuel = (game, playerCard) =>{
         return null;
     }
 
-    const result = compareCards(playerCard, computerCard);
+    const firstPlayer = getFirstPlayer(game);
+    const result = duel(playerCard, computerCard);
 
-    removeCards(game.playerHand , playerCard);
-    removeCards(game.computerHand, computerCard);
+    game.playerHand = removeCards(game.playerHand , playerCard);
+    game.computerHand = removeCards(game.computerHand, computerCard);
 
-    game.duel ++;
+    game.duelCount ++;
+
+    if (game.firstCamp === "emperor") {
+        game.firstCamp = "slave";
+    } 
+    else {
+         game.firstCamp = "emperor";
+    }
 
     if(result !== "tie"){
-        finishRound(game, result);
+        if (result === "win") {
+      finishRound(game, "player");
+    } else {
+      finishRound(game, "computer");
+    }
 
         if(isGameFinished(game)){
             game.status = "finished";
         }
     }
 
-    return {playerCard, computerCard, result}
+    return {playerCard, computerCard, firstPlayer, result}
 
 }
 
@@ -106,9 +119,10 @@ export const createGame = (playerId) =>{
     const game = {
     playerId,
     round: 1,
-    duel: 0,
+    duelCount: 0,
     playerCamp: null,
     computerCamp: null,
+    firstCamp: "emperor",
     playerHand: [],
     computerHand: [],
     playerScore: 0,
@@ -132,7 +146,11 @@ export const isGameFinished =(game) =>{
     
 }
 
-export const getGameWinner = (winner) =>{
+export const getCurrentGroup = (round) => {
+  return Math.ceil(round / 3);
+};
+
+export const getGameWinner = (game) =>{
     if(!isGameFinished(game)){
         return null;
     }
@@ -151,6 +169,10 @@ export const getGameWinner = (winner) =>{
 export const startRound = (game) =>{
     const playerCamp = getPlayerCamp(game.round);
 
+    if (playerCamp === null) {
+        return null;
+    }
+
     let computerCamp;
 
     if(playerCamp === "emperor"){
@@ -165,7 +187,7 @@ export const startRound = (game) =>{
     game.playerHand = createHand(playerCamp);
     game.computerHand = createHand(computerCamp);
     
-    game.duel = 0;
+    game.duelCount = 0;
     game.roundWinner = null;
 
     return game;
@@ -191,6 +213,15 @@ export const getPlayerCamp = (round) =>{
 
     return null;
 }
+
+export const getFirstPlayer = (game) => {
+  if (game.firstCamp === game.playerCamp) {
+    return "player";
+  }
+
+  return "computer";
+};
+
 
 export const calculateRoundPoints = (winnerCamp) =>{
 
@@ -248,4 +279,35 @@ export const nextRound = (game) =>{
     startRound(game);
 
     return true;
+}
+
+//game result managment
+
+export const getGameResult = (game)=>{
+
+    if(!isGameFinished(game)){
+        return null ;
+    }
+
+    const winner = getGameWinner(game);
+
+    let result;
+
+    if(winner === "player"){
+        result = "win";
+    }
+    else if(winner === "computer"){
+        result = "loss";
+    }
+    else{
+        result = "tie";
+    }
+
+    return {
+        playerId : game.playerId,
+        playerScore : game.playerScore,
+        computerScore : game.computerScore,
+        result : result
+    }
+
 }

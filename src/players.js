@@ -1,6 +1,8 @@
 import { getData , saveData, removeData } from "./storage.js"
 
-const key = "example_key"
+const key = "ecard_players";
+const selectedPlayerKey = "ecard_selected_player";
+
 export const getPlayers = () =>{
 
     return getData(key) || []
@@ -29,6 +31,9 @@ export const getPlayerById = (id) =>{
 // }
 
 export const validateNickName = (name , excludeId = null )=>{
+    if (typeof name !== "string") {
+     return false;
+    }
 
     const nickname = name.trim();
     const regex = /^[A-Za-z0-9]{3,15}$/
@@ -39,7 +44,8 @@ export const validateNickName = (name , excludeId = null )=>{
 
     const players = getPlayers();
 
-     const found = players.find((player) => player.nickname.toLowerCase() === name.toLowerCase() && player.id !== excludeId)
+     const found = players.find(player =>
+    player.nickname.toLowerCase() === nickname.toLowerCase() && player.id !== excludeId)
 
      if(found){
         return false;
@@ -52,34 +58,34 @@ export const validateNickName = (name , excludeId = null )=>{
 
 export const createPlayer = (name , profilePicture) =>{
 
-    const players = getPlayers();
-
+    
     if(!validateNickName(name)){
-
+        
         // alert("name already exist chose another one");
         console.error("alredy exist")
         return null
         
     }
-
-    const newPalyer = {
+    const players = getPlayers();
+    
+    const newPlayer = {
                 id : crypto.randomUUID(),
-                nickname : name,
+                nickname : name.trim(),
                 avatar : profilePicture,
                 gamesPlayedCount : 0,
-                createdAt : Date.now()
+                createdAt : Date.now().toString()
             }
 
-            players.push(newPalyer);
+            players.push(newPlayer);
 
             saveData(key , players);
-            return newPalyer;
+            return newPlayer;
 }
 
 export const updatePlayer = (id, newName , newAvatar) =>{
 
     const players = getPlayers();
-    const player = getPlayerById(id);
+    const player = players.find(player => player.id === id);
 
     if(!player){
         return null;
@@ -93,6 +99,8 @@ export const updatePlayer = (id, newName , newAvatar) =>{
     player.avatar = newAvatar;
 
     saveData(key , players);
+
+    return player;
 
 }
 
@@ -110,6 +118,10 @@ export const deletePlayer = (id) =>{
 
     saveData(key , updatedPlayers);
 
+    if (getData(selectedPlayerKey) === id) {
+    removeData(selectedPlayerKey);
+  }
+
     return true;
 
 
@@ -121,17 +133,13 @@ export const incrementGamesPlayed = (id) =>{
 
     const players = getPlayers();
 
-    const playerToIncrement = getPlayerById(id);
+    const player = players.find(player => player.id === id);
 
-    if(!playerToIncrement){
-        return false
+    if (!player) {
+     return false;
     }
 
-    players.forEach(player => {
-        if(player.id === playerToIncrement.id){
-            player.gamesPlayedCount ++;
-        }
-    });
+    player.gamesPlayedCount++;
 
     saveData(key, players);
 
@@ -150,21 +158,21 @@ export const selectPlayer =(id)=>{
         return false;
     }
 
-    saveData("selected_Player" , id);
+    saveData(selectedPlayerKey , id);
 
     return true;
 }
 
 export const getSelectedPlayer =()=>{
 
-    const selected_Player_id = localStorage.getItem("selected_player")
+    const selectedPlayerId = getData(selectedPlayerKey)
 
-    if(!selected_Player_id){
+    if(!selectedPlayerId){
         return null;
     }
 
 
-    return getPlayerById(selected_Player_id);
+    return getPlayerById(selectedPlayerId);
 
 }
 
