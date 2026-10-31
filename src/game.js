@@ -55,6 +55,40 @@ export const compareCards = (playerCard , computerCard ) =>{
 
 }
 
+export const playDuel = (game, playerCard) =>{
+
+    if(game.status != "playing" || game.roundWinner !== null ){
+        return null
+    }
+    if(!game.playerHand.includes(playerCard)){
+        return null;
+    }
+
+    const computerCard = choseComputerCard(game.computerHand);
+
+    if(computerCard === null){
+        return null;
+    }
+
+    const result = compareCards(playerCard, computerCard);
+
+    removeCards(game.playerHand , playerCard);
+    removeCards(game.computerHand, computerCard);
+
+    game.duel ++;
+
+    if(result !== "tie"){
+        finishRound(game, result);
+
+        if(isGameFinished(game)){
+            game.status = "finished";
+        }
+    }
+
+    return {playerCard, computerCard, result}
+
+}
+
 
 
 
