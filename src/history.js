@@ -28,3 +28,19 @@ export const saveMatch = (gameRessult)=>{
 
     return newMatch;
 }
+
+export const deleteMatch = (id) =>{
+    const history = getHistory();
+
+    const match = history.find(item => item.id === id);
+
+    if(!match){
+        return false;
+    }
+
+    const updatedHistory = history.filter(item => item.id !== id);
+
+    saveData(key , updatedHistory);
+
+    return true;
+}
