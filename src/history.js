@@ -16,8 +16,8 @@ export const saveMatch = (gameRessult)=>{
 
     const newMatch = {
         id : `g_${Date.now()}`,
-        player : gameRessult.playerId,
-        date : Date.now().toString(),
+        playerId : gameRessult.playerId,
+        date: new Date().toISOString(),
         playerScore : gameRessult.playerScore,
         computerScore : gameRessult.computerScore,
         result : gameRessult.result
@@ -51,13 +51,10 @@ export const getFiltredHistory = (nickname = "" , result = "all" , dateFilter = 
     const history = getHistory();
     const players = getPlayers();
 
-    
-
-    const filterByName = history.filter((data) => data.nickname === player.nickname)
 
     const FiltredHistory = history.filter(match => {
 
-        const player = players.find((player)=> player.id === match.id);
+        const player = players.find((player)=> player.id === match.playerId);
 
         const playerName = player ? player.nickname : "Deleted Player";
 
