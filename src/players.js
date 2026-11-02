@@ -69,7 +69,7 @@ export const createPlayer = (name , profilePicture) =>{
     const players = getPlayers();
     
     const newPlayer = {
-                id : crypto.randomUUID(),
+                id :`p_${Date.now()}`,
                 nickname : name.trim(),
                 avatar : profilePicture,
                 gamesPlayedCount : 0,
