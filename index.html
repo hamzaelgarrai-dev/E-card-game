@@ -5,11 +5,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="./src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=IBM+Plex+Mono:wght@500&family=Zen+Kaku+Gothic+New:wght@500&display=swap">
     
 </head>
-<body class="bg-gray-700">
+<body class="bg-ink overflow-x-hidden">
 
-  <h1>test</h1>
+  <main id="main" class="w-full">
+
+    <header class="w-full border-b border-[#b08d3a] h-16 flex justify-between items-center  px-12 mb-2 md:mb-0 ">
+
+      <p class="text-ash font-mincho text-xl">E-CARD GAME</p>
+      <P class="text-gold font-plex">profile</P>
+
+    </header>
+
+
+    <section id="instruction" class="hidden relative w-full min-h-screen flex flex-col md:flex-row items-center px-12  ">
+
+      <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 -top-24">帝皇</h3>
+
+      <div class=" flex flex-col w-full h-full space-y-4 ">
+        <p class="text-blood text-xl font-plex tracking-[20px]">Espoir</p>
+        <h1 class="text-paper font-mincho text-6xl md:text-[82px] font-medium">E-CARD</h1>
+        <p class="text-paper font-zen ">Twelve rounds against the Computer. <br>
+        Five cards each. One of yours can destroy an Emperor. <br>One of theirs can destroy you.</p>
+
+        <button class="w-[320px] md:w-[380px] h-12 bg-paper text-ink shadow-hard font-plex ">ENTER THE TABLE</button>
+
+        <div class="pt-4 space-y-3 max-w-[320px]">
+          <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-6">I. Create Profile</p>
+        <hr class="w-[320px] h-1">
+        <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-6">II. Check Game History</p>
+         <hr class="w-[320px] h-1">
+        <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-6">III. Star The Repo</p>
+
+        </div>
+        
+
+      </div>
+
+      <div class=" flex flex-col bg-paper w-full h-full p-8 space-y-3">
+        <p class="text-blood tracking-wide font-plex">ARTICLES OF THE GAME</p>
+        <hr class="w-full h-0.5 bg-ash">
+        <div class="flex space-x-4">
+          <p class="text-blood text-4xl font-mincho font-medium">皇 <br> 帝</p>
+          <div class="flex flex-col space-y-2">
+
+            <p class="font-bold font-mincho">Emperor</p>
+            <p class="font-zen">Rules over all. Defeats the Citizen. Each victory in this camp earns 1 point.</p>
+            
+          </div>
+          
+        </div>
+        <hr class="w-full h-0.5 bg-ash">
+
+        <div class="flex space-x-4">
+          <p class="text-ink text-4xl font-mincho font-medium">皇<br>帝</p>
+          <div class="flex flex-col space-y-2">
+
+            <p class="font-bold font-mincho">Citizen</p>
+            <p class="font-zen">Defeats the Slave. Draws with another Citizen. An ordinary card, yet every move matters.</p>
+            
+          </div>
+          
+        </div>
+        <hr class="w-full h-0.5 bg-ash">
+
+        <div class="flex space-x-4">
+          <p class="text-ink text-4xl font-mincho font-medium">奴<br>隷</p>
+          <div class="flex flex-col space-y-2">
+
+            <p class="font-bold font-mincho">Slave</p>
+            <p class="font-zen">Nothing left to lose. The only one who can defeat the Emperor. Each victory earns 5 points.</p>
+            
+          </div>
+          
+        </div>
+      </div>
+
+      
+
+    </section>
+
+
+
+
+    <section id="playersView" class="relative flex min-h-screen w-full items-center justify-center px-12 gap-4 ">
+
+     
+      <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 -top-24">皇帝</h3>
+
+      <div class=" flex flex-col w-full h-full space-y-4 ">
+        <p class="text-blood text-xl font-plex tracking-[16px]">Profiles</p>
+        <h1 class="text-paper font-mincho text-6xl md:text-[72px] font-medium">Who Plays ?</h1>
+        <p class="text-ash font-zen ">Choose a signed player, or sign a new one.</p>
+
+        <div class="w-full h-20 bg-paper flex items-center justify-between px-3">
+          <div class="flex  items-center ">
+            <div class="avatar">
+
+              <img src="assets/Avatars/snake.svg" alt="snake" class="h-16 w-full object-cover">
+
+            </div>
+            <div class="player-detaills flex flex-col  p-2">
+              <P class="font-mincho text-[24px] leading-[38px]">Player Name</P>
+              <P class="font-plex text-[11px] font-medium tracking-wider">GAMES PLAYED: 12 </P>
+
+            </div>
+          </div>
+
+          <div class="options flex w-64  justify-between font-plex">
+
+           <span class="font-plex text-xs tracking-wider text-blood">> SELECTED</span>
+          <button class="font-plex text-xs tracking-wider hover:text-blood">EDIT</button>
+          <button class="font-plex text-xs tracking-wider hover:text-blood">DELETE</button>
+
+
+          </div>
+        </div>
+
+
+        
+
+       
+
+      </div>
+
+      <div class=" flex flex-col bg-paper w-full h-full p-8 space-y-3">
+        <p class="text-blood tracking-wide font-plex">CREATE NEW PLAYER</p>
+
+       
+
+        
+        <input id="nickname" name="nickname" type="text" placeholder="Enter your Nickname" 
+               class=" block w-full border-0 border-b-2 border-ink bg-transparent py-1.5 font-plex text-[22px] text-ink outline-none focus:border-blood">
+        <p class="mt-2 text-sm text-blood">3 to 15 characters, letters and numbers only.</p>
+        
+              <div class="mt-6">
+                <p class="mb-2.5 font-plex text-[11px] tracking-[6px]">CHOOSE YOUR AVATAR</p>
+                <div class="grid grid-cols-3 gap-3 mb-8">
+              <div class="border-[3px] border-blood p-1 cursor-pointer">
+                <img src="assets/Avatars/dragon.svg" alt="dragon" class="h-20 w-20 object-contain mx-auto">
+              </div>
+              <div class="border-[3px] border-blood p-1 cursor-pointer">
+                <img src="assets/Avatars/owl.svg" alt="owl" class="h-20 w-20 object-contain mx-auto">
+              </div>
+              <div class="border-[3px] border-blood p-1 cursor-pointer">
+                <img src="assets/Avatars/wolf.svg" alt="wolf" class="h-20 w-20 object-contain mx-auto">
+              </div>
+              <div class="border-[3px] border-blood p-1 cursor-pointer">
+                <img src="assets/Avatars/tiger.svg" alt="tiger" class="h-20 w-20 object-contain mx-auto">
+              </div>
+              <div class="border-[3px] border-blood p-1 cursor-pointer">
+                <img src="assets/Avatars/fox.svg" alt="fox" class="h-20 w-20 object-contain mx-auto">
+              </div>
+              <div class="border-[3px] border-blood p-1 cursor-pointer">
+                <img src="assets/Avatars/snake.svg" alt="snake" class="h-20 w-20 object-contain mx-auto">
+              </div>
+            </div>
+            </div>
+
+            <button type="submit"
+                class=" block w-full bg-blood p-4 text-center font-plex text-base tracking-[8px] text-paper shadow-ink hover:bg-ink">CONFIRM</button>
+
+        </div>
+    
+
+    </section>
+    
+    <section></section>
+    <section></section>
+
+
+
+  </main>
+  
  
    
   <script type="module" src="./src/main.js"></script>
