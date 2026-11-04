@@ -10,9 +10,9 @@
 </head>
 <body class="bg-ink overflow-x-hidden">
 
-  <main id="main" class="w-full">
+  <main id="main" class="w-full h-full bg-blood/15">
 
-    <header class="w-full border-b border-[#b08d3a] h-16 flex justify-between items-center  px-12 mb-2 md:mb-0 ">
+    <header class="w-full border-b border-[#b08d3a] h-16 flex justify-between items-center  px-12  ">
 
       <p class="text-ash font-mincho text-xl">E-CARD GAME</p>
       <P class="text-gold font-plex">profile</P>
@@ -20,9 +20,9 @@
     </header>
 
 
-    <section id="instruction" class="hidden relative w-full min-h-screen flex flex-col md:flex-row items-center px-12  ">
+    <section id="instruction" class=" hidden relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row items-center px-12  ">
 
-      <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 -top-24">帝皇</h3>
+      <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 ">帝皇</h3>
 
       <div class=" flex flex-col w-full h-full space-y-4 ">
         <p class="text-blood text-xl font-plex tracking-[20px]">Espoir</p>
@@ -44,7 +44,7 @@
 
       </div>
 
-      <div class=" flex flex-col bg-paper w-full h-full p-8 space-y-3">
+      <div class=" flex flex-col bg-paper w-[90%] h-full p-8 space-y-3">
         <p class="text-blood tracking-wide font-plex">ARTICLES OF THE GAME</p>
         <hr class="w-full h-0.5 bg-ash">
         <div class="flex space-x-4">
@@ -90,17 +90,17 @@
 
 
 
-    <section id="playersView" class="relative flex min-h-screen w-full items-center justify-center px-12 gap-4 ">
+    <section id="playersView" class="hidden  relative isolate overflow-hidden flex min-h-screen w-full items-center justify-center px-12 gap-4 ">
 
      
-      <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 -top-24">皇帝</h3>
+      <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 ">皇帝</h3>
 
       <div class=" flex flex-col w-full h-full space-y-4 ">
         <p class="text-blood text-xl font-plex tracking-[16px]">Profiles</p>
         <h1 class="text-paper font-mincho text-6xl md:text-[72px] font-medium">Who Plays ?</h1>
         <p class="text-ash font-zen ">Choose a signed player, or sign a new one.</p>
 
-        <div class="w-full h-20 bg-paper flex items-center justify-between px-3">
+        <div class="w-[90%] h-20 bg-paper flex items-center justify-between px-3">
           <div class="flex  items-center ">
             <div class="avatar">
 
@@ -131,7 +131,7 @@
 
       </div>
 
-      <div class=" flex flex-col bg-paper w-full h-full p-8 space-y-3">
+      <div class=" flex flex-col bg-paper w-[70%] h-full p-8 space-y-3">
         <p class="text-blood tracking-wide font-plex">CREATE NEW PLAYER</p>
 
        
@@ -173,8 +173,61 @@
 
     </section>
     
-    <section></section>
-    <section></section>
+    <section id="gameView" class="  relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row  gap-8">
+
+      <h3 class="absolute -z-50 font-mincho text-[560px] text-blood/20 pl-32 -top-24">皇帝</h3>
+
+    <div class="flex flex-col bg-paper text-ink w-full md:w-56 p-6 space-y-3">
+    <p class="text-blood tracking-wide font-plex">STATUS</p>
+    <hr class="w-full h-0.5 bg-ink">
+    <p class="font-zen text-sm">Round</p>
+    <p id="roundInfo" class="font-plex">04 / 12</p>
+    <hr class="w-full h-0.5 bg-ink">
+    <p class="font-zen text-sm">Group</p>
+    <p id="groupInfo" class="font-plex">02 / 04</p>
+    <hr class="w-full h-0.5 bg-ink">
+    <p class="font-zen text-sm text-blood">Your camp</p>
+    <p id="campInfo" class="font-plex text-blood">EMPEROR (win = 1)</p>
+    <hr class="w-full h-0.5 bg-ink">
+    <p class="font-zen text-sm">Plays first</p>
+    <p id="firstInfo" class="font-plex">YOU</p>
+    <hr class="w-full h-0.5 bg-ink">
+    <p class="font-zen text-sm">Score: you</p>
+    <p id="playerScore" class="font-plex">03</p>
+    <hr class="w-full h-0.5 bg-ink">
+    <p class="font-zen text-sm">Score: computer</p>
+    <p id="computerScore" class="font-plex">05</p>
+  </div>
+
+  <div class="flex flex-col flex-1 items-center justify-between space-y-6 pt-12">
+
+    <div id="computerHand" class="flex space-x-3">
+      <div class="w-24 h-36 bg-ink border border-gold"></div>
+      <div class="w-24 h-36 bg-ink border border-gold"></div>
+      <div class="w-24 h-36 bg-ink border border-gold"></div>
+      <div class="w-24 h-36 bg-ink border border-gold"></div>
+      <div class="w-24 h-36 bg-ink border border-gold"></div>
+    </div>
+
+    <div class="flex flex-col items-center space-y-4">
+      <div class="flex items-center space-x-8">
+        <div id="duelPlayer" class="w-28 h-44 border border-dashed border-gold flex items-center justify-center text-ash font-plex">YOU</div>
+        <div id="duelComputer" class="w-28 h-44 border border-dashed border-gold flex items-center justify-center text-ash font-plex">COMPUTER</div>
+      </div>
+      <p id="duelMessage" class="text-paper font-plex">Pick a card.</p>
+    </div>
+
+    <div id="playerHand" class="flex space-x-3 ">
+      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
+      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
+      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
+      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
+      <img src="assets/images/empereur.png" alt="emperor" data-card="emperor" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
+   </div>
+
+  </div>
+
+    </section>
 
 
 
