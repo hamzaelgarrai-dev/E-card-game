@@ -7,24 +7,28 @@
 
 // console.log("test 5 : ", getPlayers())
 
-import { showPlayers, showView } from "./ui.js";
+import { showHeaderPlayer, showHistory, showPlayers, showView } from "./ui.js";
 import { getSelectedPlayer , selectPlayer , deletePlayer ,getPlayerById, updatePlayer,validateNickName , createPlayer} from "./players.js";
 
 
-// controling the view 
+// controling the view (navigation);
 
 document.getElementById("homeRef").addEventListener("click" , ()=>{
-  showView("instructionView")
+  showView("instructionView");
+  
 })
 
 document.getElementById("gotoProfileView").addEventListener("click", ()=>{
 
     showView("playersView");
+    
+    
 
 })
 
 document.getElementById("gotoGameBoardView").addEventListener("click" , ()=>{
     const registed = getSelectedPlayer()
+    
     if(registed){
 
         showView("gameView");
@@ -35,7 +39,9 @@ document.getElementById("gotoGameBoardView").addEventListener("click" , ()=>{
 })
 
 document.getElementById("gotoHistory").addEventListener("click" , ()=>{
-    showView("gameHistoryView")
+    showView("gameHistoryView");
+    showHistory();
+   
 })
 
 
@@ -56,6 +62,7 @@ const handlePlayerSelection = () => {
     const playerId = profileCard.dataset.id;
 
     selectPlayer(playerId);
+    showHeaderPlayer();
 
     showPlayers();
   });
@@ -84,6 +91,7 @@ const handlePlayerDeletion = () => {
 
     deletePlayer(playerId);
     showPlayers();
+    showHeaderPlayer();
   });
 };
 
@@ -162,6 +170,7 @@ editForm.addEventListener("submit", (event) => {
 
   dialog.close();
   showPlayers();
+  showHeaderPlayer();
 });
 
 document.querySelector("#cancelEdit").addEventListener("click", () => {
@@ -217,12 +226,30 @@ playerForm.addEventListener("submit", (event) => {
   });
 });
 
+
+//handling game History search
+
+const searchInput = document.querySelector("#searchInput");
+
+searchInput.addEventListener("input" , ()=>{
+  showHistory(searchInput.value);
+})
+
+
+
+
+
+
+
+
 const main = () =>{
 
     showView("instructionView");
     showPlayers();
     handlePlayerSelection();
-    handlePlayerDeletion()
+    handlePlayerDeletion();
+    showHeaderPlayer();
+    // showHistory();
 }
 
 

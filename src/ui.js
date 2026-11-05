@@ -1,5 +1,15 @@
 import { getPlayers , getSelectedPlayer , } from "./players.js";
+import { getFilteredHistory } from "./history.js";
 
+// Showing selected Profile in header
+export const showHeaderPlayer = () => {
+  const player = getSelectedPlayer();
+  const label = document.getElementById("headerPlayer");
+
+  label.textContent = player ? "PROFILE: " + player.nickname : "NO PLAYER SELECTED";
+};
+
+// Navigation
 export const showView = (ViewID) =>{
     const views = document.querySelectorAll("main section");
 
@@ -15,6 +25,7 @@ export const showView = (ViewID) =>{
     }
 }
 
+// Showing Players
 export const showPlayers = () =>{
     const players = getPlayers();
 
@@ -64,4 +75,58 @@ export const showPlayers = () =>{
         
         
     })
+}
+
+
+//showing history
+
+export const showHistory = (nickname = "") =>{
+  const history = getFilteredHistory(nickname);
+  const players = getPlayers();
+
+  const gameList = document.querySelector("#gamesList");
+  const emptyMessage = document.querySelector("#emptyMessage");
+
+  gameList.innerHTML = "";
+
+  if(history.length === 0){
+    emptyMessage.classList.remove("hidden");
+    return;
+
+  }
+
+  emptyMessage.classList.add("hidden");
+
+  history.forEach((match)=>{
+
+    const player = players.find((p)=>p.id === match.playerId);
+
+    const playerName = player ? player.nickname : "Deleted Player";
+
+    const gameDate = new Date(match.date).toLocaleString();
+
+    const gameRow = document.createElement("div");
+
+    gameRow.className = "flex item-center justify-between border-b border-ink/20 p-4";
+
+    gameRow.innerHTML = `<div>
+                <p class="font-mincho text-lg">${playerName}</p>
+                <p class="font-plex text-xs">${gameDate}</p>
+            </div>
+
+            <div class="font-plex text-sm">
+                <p>${match.playerScore} - ${match.computerScore}</p>
+                <p class="uppercase">${match.result}</p>
+            </div>
+
+            <button
+                class="delete-game-btn text-blood text-xs"
+                data-game-id="${match.id}"
+            >
+                DELETE
+            </button>`
+
+            gameList.appendChild(gameRow);
+
+  })
 }

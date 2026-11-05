@@ -46,7 +46,7 @@ export const deleteMatch = (id) =>{
     return true;
 }
 
-export const getFiltredHistory = (nickname = "" , result = "all" , dateFilter = "all") =>{
+export const getFilteredHistory = (nickname = "" , result = "all" , dateFilter = "all") =>{
 
     const history = getHistory();
     const players = getPlayers();
@@ -58,7 +58,7 @@ export const getFiltredHistory = (nickname = "" , result = "all" , dateFilter = 
 
         const playerName = player ? player.nickname : "Deleted Player";
 
-        const matchesName = playerName.toLowerCase().incluses(nickname.trim().toLocaleLowerCase());
+        const matchesName = playerName.toLowerCase().includes(nickname.trim().toLowerCase());
 
         const matchesResult = result === "all" || match.result === result;
 
@@ -72,7 +72,7 @@ export const getFiltredHistory = (nickname = "" , result = "all" , dateFilter = 
             isInSelectedDteRange = matchDate.toDateString() === now.toDateString();
         }
 
-        if(dateFilter === "last7days"){
+        if(dateFilter === "week"){
             const sevenDayAgo = new Date();
             sevenDayAgo.setDate(now.getDate() - 7);
 
