@@ -1,4 +1,4 @@
-import { getPlayers , getSelectedPlayer } from "./players.js";
+import { getPlayers , getSelectedPlayer , } from "./players.js";
 
 export const showView = (ViewID) =>{
     const views = document.querySelectorAll("main section");
@@ -45,7 +45,7 @@ export const showPlayers = () =>{
             </div>
             <div class="player-detaills flex flex-col  p-2">
               <P class="font-mincho text-[24px] leading-[38px]">${player.nickname}</P>
-              <P class="font-plex text-[11px] font-medium tracking-wider">GAMES PLAYED: 12 </P>
+              <P class="font-plex text-[11px] font-medium tracking-wider">GAMES PLAYED: ${player.gamesPlayedCount}</P>
 
             </div>
           </div>
@@ -53,7 +53,7 @@ export const showPlayers = () =>{
           <div class="options flex w-64  justify-between font-plex">
 
           <button class="select-btn font-plex text-xs tracking-wider ${isSelected ? "text-blood" : "hover:text-blood"}">${isSelected ? "SELECTED" : "SELECT"}</button>
-          <button class="font-plex text-xs tracking-wider hover:text-blood">EDIT</button>
+          <button class="edit-btn font-plex text-xs tracking-wider hover:text-blood">EDIT</button>
           <button class="delete-btn font-plex text-xs tracking-wider hover:text-blood">DELETE</button>
 
 
