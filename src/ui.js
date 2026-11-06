@@ -80,8 +80,8 @@ export const showPlayers = () =>{
 
 //showing history
 
-export const showHistory = (nickname = "") =>{
-  const history = getFilteredHistory(nickname);
+export const showHistory = (nickname = "" , result = "all", dateFilter = "all") =>{
+  const history = getFilteredHistory(nickname , result, dateFilter);
   const players = getPlayers();
 
   const gameList = document.querySelector("#gamesList");

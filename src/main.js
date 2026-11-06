@@ -9,6 +9,7 @@
 
 import { showHeaderPlayer, showHistory, showPlayers, showView } from "./ui.js";
 import { getSelectedPlayer , selectPlayer , deletePlayer ,getPlayerById, updatePlayer,validateNickName , createPlayer} from "./players.js";
+import { deleteMatch } from "./history.js";
 
 
 // controling the view (navigation);
@@ -230,17 +231,84 @@ playerForm.addEventListener("submit", (event) => {
 //handling game History search
 
 const searchInput = document.querySelector("#searchInput");
+const resultFilters = document.querySelector("#resultFilters");
+let selectedResult = "all";
+let selectedDate = "all";
 
+
+
+//filter by game result win/loos ...
+
+resultFilters.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-result]");
+
+    if (!button) return;
+
+    selectedResult = button.dataset.result;
+
+    showHistory(searchInput.value, selectedResult , selectedDate);
+});
+
+//filter by date 
+
+const dateFilters = document.querySelector("#dateFilters");
+
+dateFilters.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-date]");
+
+    if (!button) return;
+
+    selectedDate = button.dataset.date;
+
+    showHistory(searchInput.value, selectedResult, selectedDate);
+});
+
+//filter by input 
 searchInput.addEventListener("input" , ()=>{
-  showHistory(searchInput.value);
+  showHistory(searchInput.value , selectedResult, selectedDate);
 })
 
+// handling game history deletion
 
+const gamesList = document.querySelector("#gamesList");
+const deleteGameDialog = document.querySelector("#deleteGameDialog");
 
+let selectedGameId = null;
 
+gamesList.addEventListener("click", (event) => {
+    const deleteButton = event.target.closest(".delete-game-btn");
 
+    if (!deleteButton) return;
 
+    selectedGameId = deleteButton.dataset.gameId;
 
+    deleteGameDialog.showModal();
+});
+
+// handling game history deletion confirmation
+
+const confirmDeleteGame = document.querySelector("#confirmDeleteGame");
+
+confirmDeleteGame.addEventListener("click", () => {
+    if (!selectedGameId) return;
+
+    deleteMatch(selectedGameId);
+
+    selectedGameId = null;
+
+    deleteGameDialog.close();
+
+    showHistory(searchInput.value, selectedResult, selectedDate);
+});
+
+// handling game history deletion cancelation
+
+const cancelDeleteGame = document.querySelector("#cancelDeleteGame");
+
+cancelDeleteGame.addEventListener("click", () => {
+    selectedGameId = null;
+    deleteGameDialog.close();
+});
 
 const main = () =>{
 
