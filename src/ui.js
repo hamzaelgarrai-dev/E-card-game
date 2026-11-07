@@ -1,12 +1,22 @@
 import { getPlayers , getSelectedPlayer , } from "./players.js";
 import { getFilteredHistory } from "./history.js";
+import { getFirstPlayer, getCurrentGroup } from "./game.js";
 
 // Showing selected Profile in header
 export const showHeaderPlayer = () => {
   const player = getSelectedPlayer();
   const label = document.getElementById("headerPlayer");
+  
 
   label.textContent = player ? "PROFILE: " + player.nickname : "NO PLAYER SELECTED";
+
+  const selectedPlayer = getSelectedPlayer();
+  const startButton = document.querySelector("#StartNewGame");
+
+    if (!selectedPlayer) return;
+
+    startButton.textContent =
+        `ENTER THE TABLE AS : ${selectedPlayer.nickname.toUpperCase()}`;
 };
 
 // Navigation
@@ -77,6 +87,65 @@ export const showPlayers = () =>{
     })
 }
 
+//show game
+
+export const showGame = (game) => {
+
+    // Game information
+    document.querySelector("#roundInfo").textContent = `${game.round} / 12`;
+
+    document.querySelector("#groupInfo").textContent = `${getCurrentGroup(game.round)} / 4`;
+
+    document.querySelector("#playerScore").textContent = game.playerScore;
+
+    document.querySelector("#computerScore").textContent = game.computerScore;
+
+
+    // Player's hand
+    const playerHand = document.querySelector("#playerHand");
+    playerHand.innerHTML = "";
+
+    const cardImages = {
+        citizen: "assets/images/citoyen.png",
+        emperor: "assets/images/empereur.png",
+        slave: "assets/images/esclave.png"
+    };
+
+    game.playerHand.forEach((card) => {
+
+        const cardImage = document.createElement("img");
+
+        cardImage.src = cardImages[card];
+        cardImage.alt = card;
+        cardImage.dataset.card = card;
+
+        cardImage.className =
+            "w-24 h-36 object-contain cursor-pointer hover:-translate-y-4";
+
+        playerHand.appendChild(cardImage);
+    });
+
+
+    // Computer's hand (hidden cards)
+    const computerHand = document.querySelector("#computerHand");
+    computerHand.innerHTML = "";
+
+    game.computerHand.forEach(() => {
+
+        const card = document.createElement("div");
+
+        card.className = "w-24 h-36 bg-ink border border-gold";
+
+        computerHand.appendChild(card);
+    });
+
+
+    // Duel area
+    document.querySelector("#duelPlayer").textContent = "YOU";
+    document.querySelector("#duelComputer").textContent = "COMPUTER";
+    document.querySelector("#duelMessage").textContent = "Pick a card.";
+};
+
 
 //showing history
 
@@ -130,3 +199,14 @@ export const showHistory = (nickname = "" , result = "all", dateFilter = "all") 
 
   })
 }
+
+
+// game play handling
+
+
+const cardImages = {
+  citizen: "../assets/images/citoyen.png",
+  emperor: "../assets/images/empereur.png",
+  slave: "../assets/images/esclave.png",
+  back: "assets/images/back.png",
+};

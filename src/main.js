@@ -7,9 +7,10 @@
 
 // console.log("test 5 : ", getPlayers())
 
-import { showHeaderPlayer, showHistory, showPlayers, showView } from "./ui.js";
+import { showHeaderPlayer, showHistory, showPlayers, showView , showGame} from "./ui.js";
 import { getSelectedPlayer , selectPlayer , deletePlayer ,getPlayerById, updatePlayer,validateNickName , createPlayer} from "./players.js";
 import { deleteMatch } from "./history.js";
+import { createGame, startRound , playDuel } from "./game.js";
 
 
 // controling the view (navigation);
@@ -310,6 +311,69 @@ cancelDeleteGame.addEventListener("click", () => {
     deleteGameDialog.close();
 });
 
+
+
+// handling the game play
+
+let currentGame = null;
+
+const handleStartNewGame = () => {
+    const startButton = document.querySelector("#StartNewGame");
+
+    startButton.addEventListener("click", () => {
+        const selectedPlayer = getSelectedPlayer();
+
+        if (!selectedPlayer) {
+            alert("Please select a player first.");
+            return;
+        }
+
+        currentGame = createGame(selectedPlayer.id);
+
+        startRound(currentGame);
+
+        showView("gameView");
+        showGame(currentGame);
+    });
+};
+
+
+const handlePlayerCardSelection = () => {
+    const playerHand = document.querySelector("#playerHand");
+
+    playerHand.addEventListener("click", (event) => {
+        const selectedCard = event.target.closest("[data-card]");
+
+        if (!selectedCard || !currentGame) return;
+
+        const result = playDuel(currentGame, selectedCard.dataset.card);
+
+        if (!result) return;
+
+        showGame(currentGame);
+
+        const duelMessage = document.querySelector("#duelMessage");
+
+        if (result.result === "tie") {
+            duelMessage.textContent = "TIE! Choose another card.";
+        } else if (result.result === "win") {
+            duelMessage.textContent = "YOU WON THE ROUND!";
+        } else {
+            duelMessage.textContent = "COMPUTER WON THE ROUND!";
+        }
+
+        document.querySelector("#duelPlayer").textContent =
+            result.playerCard.toUpperCase();
+
+        document.querySelector("#duelComputer").textContent =
+            result.computerCard.toUpperCase();
+    });
+};
+
+
+
+
+
 const main = () =>{
 
     showView("instructionView");
@@ -318,6 +382,8 @@ const main = () =>{
     handlePlayerDeletion();
     showHeaderPlayer();
     // showHistory();
+    handleStartNewGame();
+    handlePlayerCardSelection();
 }
 
 
