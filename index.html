@@ -14,13 +14,13 @@
 
     <header class="w-full border-b border-[#b08d3a] h-16 flex justify-between items-center  px-12  ">
 
-      <p class="text-ash font-mincho text-xl">E-CARD GAME</p>
-      <P class="text-gold font-plex">profile</P>
+      <p id="homeRef" class="text-paper font-mincho text-xl cursor-pointer">E-CARD GAME</p>
+      <P id="headerPlayer" class="text-gold font-plex">profile</P>
 
     </header>
 
 
-    <section id="instruction" class=" hidden relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row items-center px-12  ">
+    <section id="instructionView" class=" hidden relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row items-center px-12  ">
 
       <h3 class="absolute -z-50  font-mincho text-[560px] text-blood/20 ">帝皇</h3>
 
@@ -30,15 +30,16 @@
         <p class="text-paper font-zen ">Twelve rounds against the Computer. <br>
         Five cards each. One of yours can destroy an Emperor. <br>One of theirs can destroy you.</p>
 
-        <button class="w-[320px] md:w-[380px] h-12 bg-paper text-ink shadow-hard font-plex ">ENTER THE TABLE</button>
+        
 
         <div class="pt-4 space-y-3 max-w-[320px]">
-          <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-6">I. Create Profile</p>
+          <p id="gotoProfileView" class="text-ash   font-mincho cursor-pointer hover:bg-white/10 h-8">I. Profiles</p>
         <hr class="w-[320px] h-1">
-        <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-6">II. Check Game History</p>
+        <p id="gotoHistory" class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-8">II. Check Game History</p>
          <hr class="w-[320px] h-1">
-        <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-6">III. Star The Repo</p>
-
+         <a target="_blank"  href="https://github.com/hamzaelgarrai-dev/E-card-game.git">
+        <p class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-8">III. Star The Repo</p>
+          </a>
         </div>
         
 
@@ -60,7 +61,7 @@
         <hr class="w-full h-0.5 bg-ash">
 
         <div class="flex space-x-4">
-          <p class="text-ink text-4xl font-mincho font-medium">皇<br>帝</p>
+          <p class="text-ink text-4xl font-mincho font-medium">市<br>民</p>
           <div class="flex flex-col space-y-2">
 
             <p class="font-bold font-mincho">Citizen</p>
@@ -100,7 +101,9 @@
         <h1 class="text-paper font-mincho text-6xl md:text-[72px] font-medium">Who Plays ?</h1>
         <p class="text-ash font-zen ">Choose a signed player, or sign a new one.</p>
 
-        <div class="w-[90%] h-20 bg-paper flex items-center justify-between px-3">
+        <div class="profileContainer space-y-2">
+
+          <!-- <div class="w-[90%] h-20 bg-paper flex items-center justify-between px-3">
           <div class="flex  items-center ">
             <div class="avatar">
 
@@ -122,7 +125,12 @@
 
 
           </div>
+        </div> -->
+
         </div>
+
+         <button id="StartNewGame" class="w-[320px] md:w-[380px] h-12 bg-paper text-ink shadow-hard font-plex ">ENTER THE TABLE AS :</button>
+        
 
 
         
@@ -136,44 +144,51 @@
 
        
 
-        
-        <input id="nickname" name="nickname" type="text" placeholder="Enter your Nickname" 
-               class=" block w-full border-0 border-b-2 border-ink bg-transparent py-1.5 font-plex text-[22px] text-ink outline-none focus:border-blood">
-        <p class="mt-2 text-sm text-blood">3 to 15 characters, letters and numbers only.</p>
+        <form id="playerForm" action="">
+
+          <input id="nickname" name="nickname" type="text" placeholder="Search by nickname"
+           class="block w-full max-w-md border-0 border-b-2 border-ash bg-transparent py-1.5 font-plex text-[22px] text-ink outline-none focus:border-blood">
+               <p id="nicknameError" class="mt-2 text-sm text-blood"></p>
         
               <div class="mt-6">
                 <p class="mb-2.5 font-plex text-[11px] tracking-[6px]">CHOOSE YOUR AVATAR</p>
-                <div class="grid grid-cols-3 gap-3 mb-8">
-              <div class="border-[3px] border-blood p-1 cursor-pointer">
+             <div id="avatarOptions" class=" grid grid-cols-3 gap-3 mb-8">
+              <div class="avatar-option border-[3px] border-blood p-1 cursor-pointer">
                 <img src="assets/Avatars/dragon.svg" alt="dragon" class="h-20 w-20 object-contain mx-auto">
               </div>
-              <div class="border-[3px] border-blood p-1 cursor-pointer">
+              <div class="avatar-option border-[3px] border-transparent p-1 cursor-pointer">
                 <img src="assets/Avatars/owl.svg" alt="owl" class="h-20 w-20 object-contain mx-auto">
               </div>
-              <div class="border-[3px] border-blood p-1 cursor-pointer">
+              <div class="avatar-option border-[3px] border-transparent p-1 cursor-pointer">
                 <img src="assets/Avatars/wolf.svg" alt="wolf" class="h-20 w-20 object-contain mx-auto">
               </div>
-              <div class="border-[3px] border-blood p-1 cursor-pointer">
+              <div class="avatar-option border-[3px] border-transparent p-1 cursor-pointer">
                 <img src="assets/Avatars/tiger.svg" alt="tiger" class="h-20 w-20 object-contain mx-auto">
               </div>
-              <div class="border-[3px] border-blood p-1 cursor-pointer">
+              <div class="avatar-option border-[3px] border-transparent p-1 cursor-pointer">
                 <img src="assets/Avatars/fox.svg" alt="fox" class="h-20 w-20 object-contain mx-auto">
               </div>
-              <div class="border-[3px] border-blood p-1 cursor-pointer">
+              <div class="avatar-option border-[3px] border-transparent p-1 cursor-pointer">
                 <img src="assets/Avatars/snake.svg" alt="snake" class="h-20 w-20 object-contain mx-auto">
               </div>
             </div>
             </div>
 
-            <button type="submit"
+            <button id="submitPlayer" type="submit"
                 class=" block w-full bg-blood p-4 text-center font-plex text-base tracking-[8px] text-paper shadow-ink hover:bg-ink">CONFIRM</button>
+
+
+        </form>
+        
 
         </div>
     
 
     </section>
+
+
     
-    <section id="gameView" class="  relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row  gap-8">
+    <section id="gameView" class=" hidden relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row  gap-8">
 
       <h3 class="absolute -z-50 font-mincho text-[560px] text-blood/20 pl-32 -top-24">皇帝</h3>
 
@@ -202,11 +217,6 @@
   <div class="flex flex-col flex-1 items-center justify-between space-y-6 pt-12">
 
     <div id="computerHand" class="flex space-x-3">
-      <div class="w-24 h-36 bg-ink border border-gold"></div>
-      <div class="w-24 h-36 bg-ink border border-gold"></div>
-      <div class="w-24 h-36 bg-ink border border-gold"></div>
-      <div class="w-24 h-36 bg-ink border border-gold"></div>
-      <div class="w-24 h-36 bg-ink border border-gold"></div>
     </div>
 
     <div class="flex flex-col items-center space-y-4">
@@ -215,19 +225,187 @@
         <div id="duelComputer" class="w-28 h-44 border border-dashed border-gold flex items-center justify-center text-ash font-plex">COMPUTER</div>
       </div>
       <p id="duelMessage" class="text-paper font-plex">Pick a card.</p>
+      <!-- <div id="gameOverBox" class="hidden bg-paper text-ink p-8 shadow-ink flex flex-col items-center space-y-2">
+       <p id="gameOverStamp" class="font-mincho text-7xl text-blood"></p>
+        <p id="gameOverScore" class="font-plex"></p>
+        <button id="playAgainBtn" class="bg-blood text-paper px-6 py-3 font-plex shadow-ink hover:bg-ink">PLAY AGAIN</button>
+      </div> -->
     </div>
 
-    <div id="playerHand" class="flex space-x-3 ">
-      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
-      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
-      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
-      <img src="assets/images/citoyen.png" alt="citizen" data-card="citizen" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
-      <img src="assets/images/empereur.png" alt="emperor" data-card="emperor" class="w-24 h-36 object-contain cursor-pointer hover:-translate-y-4">
-   </div>
+    <div id="playerHand" class="flex space-x-3">
+    </div>
 
   </div>
 
     </section>
+
+
+    <section id="gameHistoryView"  class="hidden relative isolate overflow-hidden w-full min-h-screen flex flex-col md:flex-row  px-12 gap-4 pt-8">
+
+      <h3 class="absolute -z-50 font-mincho text-[560px] text-blood/20 pl-32 -top-24">皇帝</h3>
+
+      <div class=" flex flex-col w-full h-full space-y-4 ">
+        <p class="text-blood text-xl font-plex tracking-[20px]">History</p>
+        <h1 class="text-paper font-mincho text-6xl md:text-[72px] font-medium">Game history</h1>
+        <p class="text-ash font-zen">Every game is on record, newest first.</p>
+        <input id="searchInput" type="text" placeholder="Search by nickname"
+           class="block w-full max-w-md border-0 border-b-2 border-paper bg-transparent py-1.5 font-plex text-[22px] text-paper outline-none focus:border-blood">
+
+           <div class="flex flex-wrap gap-x-8 gap-y-2 font-plex text-xs tracking-wider text-ash">
+      <div id="resultFilters" class="flex space-x-4">
+        <button data-result="all" class="text-paper border-b-2 border-blood">ALL</button>
+        <button data-result="win" class="hover:text-paper">WINS</button>
+        <button data-result="loss" class="hover:text-paper">LOSSES</button>
+        <button data-result="tie" class="hover:text-paper">DRAWS</button>
+      </div>
+      <div id="dateFilters" class="flex space-x-4">
+        <button data-date="all" class="text-paper border-b-2 border-blood">ALL TIME</button>
+        <button data-date="today" class="hover:text-paper">TODAY</button>
+        <button data-date="week" class="hover:text-paper">7 DAYS</button>
+      </div>
+    </div>
+
+
+    <div class="bg-paper text-ink w-full mt-8 p-8 ">
+
+    <div class="grid grid-cols-5 font-plex text-xs tracking-wider text-blood pb-2">
+      <p>DATE</p>
+      <p>PLAYER</p>
+      <p>SCORE</p>
+      <p>RESULT</p>
+      <p></p>
+    </div>
+    <hr class="w-full h-0.5 bg-ink">
+
+    <div id="gamesList">
+      <!-- <div class="grid grid-cols-5 items-center py-3 border-b border-ink/30">
+        <p class="font-plex text-sm">2026-10-28 14:20</p>
+        <p class="font-mincho text-xl">Yanis_07</p>
+        <p class="font-plex text-sm">9 - 4</p>
+        <p class="font-mincho text-xl text-blood border-2 border-blood w-fit px-2">WIN</p>
+        <button data-id="g_1730115600000" class="delete-game font-plex text-xs tracking-wider text-right hover:text-blood">DELETE</button>
+      </div> -->
+
+    </div>
+
+    <p id="emptyMessage" class="hidden font-mincho text-xl py-8">No games found. Your match history is empty </p>
+  </div>
+
+
+  <dialog id="deleteGameDialog" class="bg-paper p-8 text-ink w-[90%] max-w-md border border-ink shadow-ink backdrop:bg-ink/80">
+    <h2 class="font-mincho text-3xl mb-2">Delete this record?</h2>
+    <p class="font-zen mb-6">This game will be removed from the history.</p>
+    <div class="flex justify-between items-center">
+      <button id="cancelDeleteGame" class="font-plex text-xs tracking-wider hover:text-blood">CANCEL</button>
+      <button id="confirmDeleteGame" class="bg-blood text-paper px-6 py-3 font-plex tracking-[4px] shadow-ink hover:bg-ink">DELETE</button>
+    </div>
+  </dialog>
+        
+
+  </div>
+
+
+    </section>
+
+
+    <dialog id="editPlayerDialog" class="bg-paper p-8 text-ink w-[90%] max-w-md border border-ink shadow-inkbig backdrop:bg-ink/80">
+  <p class="text-blood font-plex text-xs tracking-[.2em]">REGISTRY</p>
+  <h2 class="font-mincho text-3xl mb-6">Edit player</h2>
+
+  <form id="editPlayerForm">
+    <label for="editNickname" class="font-plex text-[11px] tracking-[.15em]">NICKNAME</label>
+
+    <input
+      id="editNickname"
+      type="text"
+      maxlength="15"
+      required
+      class="block w-full border-0 border-b-2 border-ink bg-transparent py-1.5 mt-1 font-plex text-[22px] text-ink outline-none focus:border-blood"
+    >
+    <p id="editError" class="mt-2 mb-6 text-sm text-blood min-h-5"></p>
+
+    <p class="font-plex text-[11px] tracking-[.15em] mb-2.5">CHOOSE YOUR AVATAR</p>
+
+    <div id="editAvatarOptions" class="grid grid-cols-3 gap-3 mb-8">
+      <button type="button" data-avatar="dragon" class="edit-avatar border-[3px] border-blood p-1">
+        <img src="assets/Avatars/dragon.svg" alt="dragon" class="h-20 w-20 object-contain mx-auto">
+      </button>
+
+      <button type="button" data-avatar="owl" class="edit-avatar border-[3px] border-blood p-1">
+        <img src="assets/Avatars/owl.svg" alt="owl" class="h-20 w-20 object-contain mx-auto">
+      </button>
+
+      <button type="button" data-avatar="wolf" class="edit-avatar border-[3px] border-blood p-1">
+        <img src="assets/Avatars/wolf.svg" alt="wolf" class="h-20 w-20 object-contain mx-auto">
+      </button>
+
+      <button type="button" data-avatar="tiger" class="edit-avatar border-[3px] border-blood p-1">
+        <img src="assets/Avatars/tiger.svg" alt="tiger" class="h-20 w-20 object-contain mx-auto">
+      </button>
+
+      <button type="button" data-avatar="fox" class="edit-avatar border-[3px] border-blood p-1">
+        <img src="assets/Avatars/fox.svg" alt="fox" class="h-20 w-20 object-contain mx-auto">
+      </button>
+
+      <button type="button" data-avatar="snake" class="edit-avatar border-[3px] border-blood p-1">
+        <img src="assets/Avatars/snake.svg" alt="snake" class="h-20 w-20 object-contain mx-auto">
+      </button>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <button type="button" id="cancelEdit" class="font-plex text-xs tracking-[.1em] hover:text-blood">CANCEL</button>
+      <button type="submit" class="bg-blood text-paper px-6 py-3 font-plex tracking-[.2em] shadow-ink hover:bg-ink">
+        UPDATE
+      </button>
+    </div>
+  </form>
+    </dialog>
+
+
+    <section id="gameResultView" class="hidden min-h-screen flex flex-col items-center justify-center gap-8 p-6">
+
+    <h1 class="font-mincho text-5xl text-blood">
+        GAME OVER
+    </h1>
+
+    <p id="finalResult" class="font-plex text-2xl text-paper">
+        YOU WIN!
+    </p>
+
+    <div class="flex gap-12 text-center">
+
+        <div>
+            <p class="font-zen text-paper">YOUR SCORE</p>
+            <p id="finalPlayerScore" class="font-plex text-4xl text-paper">0</p>
+        </div>
+
+        <div>
+            <p class="font-zen text-paper">COMPUTER SCORE</p>
+            <p id="finalComputerScore" class="font-plex text-4xl text-paper">0</p>
+        </div>
+
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4">
+
+    <button
+        id="restartGame"
+        class="w-[320px] md:w-[250px] h-12 bg-paper text-ink shadow-hard font-plex">
+        PLAY AGAIN
+    </button>
+
+    <button
+        id="backToMenu"
+        class="w-[320px] md:w-[250px] h-12 border border-paper text-paper font-plex">
+        BACK TO MENU
+    </button>
+
+    </div>
+
+    </section>
+
+
+
 
 
 

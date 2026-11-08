@@ -27,7 +27,7 @@ export const removeCards = (hand , card) =>{
 
 }
  
-export const choseComputerCard = (hand)=>{
+export const chooseComputerCard = (hand)=>{
 
     if(hand.length === 0){
         return null;
@@ -58,14 +58,14 @@ export const duel = (playerCard , computerCard ) =>{
 
 export const playDuel = (game, playerCard) =>{
 
-    if(game.status != "playing" || game.roundWinner !== null ){
+    if(game.status !== "playing" || game.roundWinner !== null ){
         return null
     }
     if(!game.playerHand.includes(playerCard)){
         return null;
     }
 
-    const computerCard = choseComputerCard(game.computerHand);
+    const computerCard = chooseComputerCard(game.computerHand);
 
     if(computerCard === null){
         return null;
@@ -249,14 +249,14 @@ export const finishRound =(game , winner)=>{
 
     if (winner === "player") {
 
-        const ponits = calculateRoundPoints(game.playerCamp)
+        const points = calculateRoundPoints(game.playerCamp)
 
-        game.playerScore += ponits;
+        game.playerScore += points;
     }
     else{
-        const ponits = calculateRoundPoints(game.computerCamp);
+        const points = calculateRoundPoints(game.computerCamp);
 
-        game.computerScore += ponits;
+        game.computerScore += points;
     }
 
     game.roundWinner = winner;
