@@ -7,10 +7,11 @@
 
 // console.log("test 5 : ", getPlayers())
 
-import { showHeaderPlayer, showHistory, showPlayers, showView , showGame} from "./ui.js";
-import { getSelectedPlayer , selectPlayer , deletePlayer ,getPlayerById, updatePlayer,validateNickName , createPlayer} from "./players.js";
+import { showHeaderPlayer, showHistory, showPlayers, showView , showGame, showGameResult} from "./ui.js";
+import { getSelectedPlayer , selectPlayer , deletePlayer ,getPlayerById, updatePlayer,validateNickName , createPlayer , incrementGamesPlayed} from "./players.js";
 import { deleteMatch } from "./history.js";
-import { createGame, startRound , playDuel } from "./game.js";
+import { createGame, startRound , playDuel , nextRound , getGameResult } from "./game.js";
+import { saveMatch } from "./history.js";
 
 
 // controling the view (navigation);
@@ -28,17 +29,7 @@ document.getElementById("gotoProfileView").addEventListener("click", ()=>{
 
 })
 
-document.getElementById("gotoGameBoardView").addEventListener("click" , ()=>{
-    const registed = getSelectedPlayer()
-    
-    if(registed){
 
-        showView("gameView");
-    }
-    else{
-        showView("playersView")
-    }
-})
 
 document.getElementById("gotoHistory").addEventListener("click" , ()=>{
     showView("gameHistoryView");
@@ -316,6 +307,8 @@ cancelDeleteGame.addEventListener("click", () => {
 // handling the game play
 
 let currentGame = null;
+let isResolvingDuel = false;
+let isMatchSaved = false;
 
 const handleStartNewGame = () => {
     const startButton = document.querySelector("#StartNewGame");
@@ -331,7 +324,7 @@ const handleStartNewGame = () => {
         currentGame = createGame(selectedPlayer.id);
 
         startRound(currentGame);
-
+        isMatchSaved = false;
         showView("gameView");
         showGame(currentGame);
     });
@@ -343,12 +336,14 @@ const handlePlayerCardSelection = () => {
 
     playerHand.addEventListener("click", (event) => {
         const selectedCard = event.target.closest("[data-card]");
+        if (isResolvingDuel) return;
 
         if (!selectedCard || !currentGame) return;
 
         const result = playDuel(currentGame, selectedCard.dataset.card);
 
         if (!result) return;
+        isResolvingDuel = true;
 
         showGame(currentGame);
 
@@ -361,16 +356,90 @@ const handlePlayerCardSelection = () => {
         } else {
             duelMessage.textContent = "COMPUTER WON THE ROUND!";
         }
+        setTimeout( () => {
+            if (currentGame.status === "finished") {
+              
+              if (!isMatchSaved) {
+                const gameResult = getGameResult(currentGame);
 
-        document.querySelector("#duelPlayer").textContent =
-            result.playerCard.toUpperCase();
+                saveMatch(gameResult);
+                incrementGamesPlayed(currentGame.playerId);
 
-        document.querySelector("#duelComputer").textContent =
-            result.computerCard.toUpperCase();
+                isMatchSaved = true;
+              }
+
+              showGameResult(currentGame);
+            } else if (currentGame.roundWinner !== null) {
+              nextRound(currentGame);
+              showGame(currentGame);
+            } else {
+              showGame(currentGame);
+            }
+
+            isResolvingDuel = false;
+          },
+          currentGame.roundWinner !== null ? 2000 : 1500,
+        );
+
+        
+        const cardImages = {
+        citizen: "assets/images/citoyen.jpeg",
+        emperor: "assets/images/empereur.jpeg",
+        slave: "assets/images/esclave.jpeg",
+        back : "assets/images/back.jpeg"
+    };
+
+        const duelPlayer = document.querySelector("#duelPlayer");
+        const duelComputer = document.querySelector("#duelComputer");
+
+        duelPlayer.innerHTML = "";
+        duelComputer.innerHTML = "";
+
+        const playerImage = document.createElement("img");
+        playerImage.src = cardImages[result.playerCard];
+        playerImage.alt = result.playerCard;
+        playerImage.className = "w-24 h-36 object-contain";
+        duelPlayer.appendChild(playerImage);
+
+        const computerImage = document.createElement("img");
+        computerImage.src = cardImages[result.computerCard];
+        computerImage.alt = result.computerCard;
+        computerImage.className = "w-24 h-36 object-contain";
+        duelComputer.appendChild(computerImage);
     });
 };
 
+// handle back to menu after game finishing 
 
+
+const handleBackToMenu = () => {
+    const backButton = document.querySelector("#backToMenu");
+
+    backButton.addEventListener("click", () => {
+        showPlayers();
+        showView("playersView");
+    });
+};
+
+// handling playing again button
+
+const handleRestartGame = () => {
+    const restartButton = document.querySelector("#restartGame");
+
+    restartButton.addEventListener("click", () => {
+        const selectedPlayer = getSelectedPlayer();
+
+        if (!selectedPlayer) return;
+
+        currentGame = createGame(selectedPlayer.id);
+        startRound(currentGame);
+        isMatchSaved = false;
+        isResolvingDuel = false;
+
+        showView("gameView");
+        showGame(currentGame);
+    });
+};
 
 
 
@@ -384,6 +453,8 @@ const main = () =>{
     // showHistory();
     handleStartNewGame();
     handlePlayerCardSelection();
+    handleBackToMenu();
+    handleRestartGame();
 }
 
 

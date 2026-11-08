@@ -1,6 +1,6 @@
 import { getPlayers , getSelectedPlayer , } from "./players.js";
 import { getFilteredHistory } from "./history.js";
-import { getFirstPlayer, getCurrentGroup } from "./game.js";
+import { getFirstPlayer, getCurrentGroup , getGameResult} from "./game.js";
 
 // Showing selected Profile in header
 export const showHeaderPlayer = () => {
@@ -10,13 +10,10 @@ export const showHeaderPlayer = () => {
 
   label.textContent = player ? "PROFILE: " + player.nickname : "NO PLAYER SELECTED";
 
-  const selectedPlayer = getSelectedPlayer();
+ 
   const startButton = document.querySelector("#StartNewGame");
-
-    if (!selectedPlayer) return;
-
-    startButton.textContent =
-        `ENTER THE TABLE AS : ${selectedPlayer.nickname.toUpperCase()}`;
+   
+   startButton.textContent = player ? `ENTER THE TABLE AS : ${player.nickname.toUpperCase()}` : "SELECT A PROFILE";
 };
 
 // Navigation
@@ -106,9 +103,10 @@ export const showGame = (game) => {
     playerHand.innerHTML = "";
 
     const cardImages = {
-        citizen: "assets/images/citoyen.png",
-        emperor: "assets/images/empereur.png",
-        slave: "assets/images/esclave.png"
+        citizen: "assets/images/citoyen.jpeg",
+        emperor: "assets/images/empereur.jpeg",
+        slave: "assets/images/esclave.jpeg",
+        back : "assets/images/back.jpeg"
     };
 
     game.playerHand.forEach((card) => {
@@ -132,11 +130,13 @@ export const showGame = (game) => {
 
     game.computerHand.forEach(() => {
 
-        const card = document.createElement("div");
+        const card = document.createElement("img");
 
-        card.className = "w-24 h-36 bg-ink border border-gold";
+    card.src = cardImages.back;
+    card.alt = "card back";
+    card.className = "w-24 h-36 object-contain";
 
-        computerHand.appendChild(card);
+    computerHand.appendChild(card);
     });
 
 
@@ -146,6 +146,30 @@ export const showGame = (game) => {
     document.querySelector("#duelMessage").textContent = "Pick a card.";
 };
 
+// game result 
+
+export const showGameResult = (game) => {
+    const result = getGameResult(game);
+
+    if (!result) return;
+
+    const messages = {
+        win: "YOU WIN!",
+        loss: "COMPUTER WINS!",
+        tie: "IT'S A TIE!"
+    };
+
+    document.querySelector("#finalResult").textContent =
+        messages[result.result];
+
+    document.querySelector("#finalPlayerScore").textContent =
+        result.playerScore;
+
+    document.querySelector("#finalComputerScore").textContent =
+        result.computerScore;
+
+    showView("gameResultView");
+};
 
 //showing history
 
@@ -176,24 +200,26 @@ export const showHistory = (nickname = "" , result = "all", dateFilter = "all") 
 
     const gameRow = document.createElement("div");
 
-    gameRow.className = "flex item-center justify-between border-b border-ink/20 p-4";
+    gameRow.className = "grid grid-cols-5 items-center gap-2 border-b border-ink/20 p-4";
 
-    gameRow.innerHTML = `<div>
-                <p class="font-mincho text-lg">${playerName}</p>
-                <p class="font-plex text-xs">${gameDate}</p>
-            </div>
+    gameRow.innerHTML = `
+    <p class="font-plex text-xs">${gameDate}</p>
 
-            <div class="font-plex text-sm">
-                <p>${match.playerScore} - ${match.computerScore}</p>
-                <p class="uppercase">${match.result}</p>
-            </div>
+    <p class="font-mincho text-lg">${playerName}</p>
 
-            <button
-                class="delete-game-btn text-blood text-xs"
-                data-game-id="${match.id}"
-            >
-                DELETE
-            </button>`
+    <p class="font-plex text-sm">
+        ${match.playerScore} - ${match.computerScore}
+    </p>
+
+    <p class="font-plex text-xs uppercase">${match.result}</p>
+
+    <button
+        class="delete-game-btn text-blood text-xs"
+        data-game-id="${match.id}"
+    >
+        DELETE
+    </button>
+`;
 
             gameList.appendChild(gameRow);
 
@@ -201,12 +227,12 @@ export const showHistory = (nickname = "" , result = "all", dateFilter = "all") 
 }
 
 
-// game play handling
+// // game play handling
 
 
-const cardImages = {
-  citizen: "../assets/images/citoyen.png",
-  emperor: "../assets/images/empereur.png",
-  slave: "../assets/images/esclave.png",
-  back: "assets/images/back.png",
-};
+// const cardImages = {
+//   citizen: "../assets/images/citoyen.png",
+//   emperor: "../assets/images/empereur.png",
+//   slave: "../assets/images/esclave.png",
+//   back: "assets/images/back.png",
+// };

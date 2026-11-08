@@ -30,10 +30,10 @@
         <p class="text-paper font-zen ">Twelve rounds against the Computer. <br>
         Five cards each. One of yours can destroy an Emperor. <br>One of theirs can destroy you.</p>
 
-        <button id="gotoGameBoardView" class="w-[320px] md:w-[380px] h-12 bg-paper text-ink shadow-hard font-plex ">ENTER THE TABLE</button>
+        
 
         <div class="pt-4 space-y-3 max-w-[320px]">
-          <p id="gotoProfileView" class="text-ash   font-mincho cursor-pointer hover:bg-white/10 h-8">I. Create Profile</p>
+          <p id="gotoProfileView" class="text-ash   font-mincho cursor-pointer hover:bg-white/10 h-8">I. Profiles</p>
         <hr class="w-[320px] h-1">
         <p id="gotoHistory" class="text-ash font-mincho cursor-pointer hover:bg-white/10 h-8">II. Check Game History</p>
          <hr class="w-[320px] h-1">
@@ -61,7 +61,7 @@
         <hr class="w-full h-0.5 bg-ash">
 
         <div class="flex space-x-4">
-          <p class="text-ink text-4xl font-mincho font-medium">皇<br>帝</p>
+          <p class="text-ink text-4xl font-mincho font-medium">市<br>民</p>
           <div class="flex flex-col space-y-2">
 
             <p class="font-bold font-mincho">Citizen</p>
@@ -360,6 +360,49 @@
     </div>
   </form>
     </dialog>
+
+
+    <section id="gameResultView" class="hidden min-h-screen flex flex-col items-center justify-center gap-8 p-6">
+
+    <h1 class="font-mincho text-5xl text-blood">
+        GAME OVER
+    </h1>
+
+    <p id="finalResult" class="font-plex text-2xl text-paper">
+        YOU WIN!
+    </p>
+
+    <div class="flex gap-12 text-center">
+
+        <div>
+            <p class="font-zen text-paper">YOUR SCORE</p>
+            <p id="finalPlayerScore" class="font-plex text-4xl text-paper">0</p>
+        </div>
+
+        <div>
+            <p class="font-zen text-paper">COMPUTER SCORE</p>
+            <p id="finalComputerScore" class="font-plex text-4xl text-paper">0</p>
+        </div>
+
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4">
+
+    <button
+        id="restartGame"
+        class="w-[320px] md:w-[250px] h-12 bg-paper text-ink shadow-hard font-plex">
+        PLAY AGAIN
+    </button>
+
+    <button
+        id="backToMenu"
+        class="w-[320px] md:w-[250px] h-12 border border-paper text-paper font-plex">
+        BACK TO MENU
+    </button>
+
+    </div>
+
+    </section>
 
 
 
